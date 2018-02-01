@@ -10,6 +10,8 @@ class Student(object):
                         'thursday': [],
                         'friday': []}
 
+        self.pairings = []
+
         if from_backup:
             pass
 
@@ -58,21 +60,57 @@ class Student(object):
     def __str__(self):
         return '%s (%s)' % (self.name, self.net_id)
 
+    def __repr__(self):
+        return '%s (%s)' % (self.name, self.net_id)
+
 class ItaPair(object):
     def __init__(self, ita1, ita2, times):
         self.ita1 = ita1
         self.ita2 = ita2
-        self.times = times
+        self.schedule = times
 
     def __str__(self):
-        monday = '\tMonday\n\t\t%s\n' % self.times['monday'] if self.times['monday'] != [] else ''
-        tuesday = '\tTuesday\n\t\t%s\n' % self.times['tuesday'] if self.times['tuesday'] != [] else ''
-        wednesday = '\tWednesday\n\t\t%s\n' % self.times['wednesday'] if self.times['wednesday'] != [] else ''
-        thursday = '\tThursday\n\t\t%s\n' % self.times['thursday'] if self.times['thursday'] != [] else ''
-        friday = '\tFriday\n\t\t%s\n' % self.times['friday'] if self.times['friday'] != [] else ''
+        monday = '\tMonday\n\t\t%s\n' % self.schedule['monday'] \
+                    if self.schedule['monday'] != [] else ''
+        tuesday = '\tTuesday\n\t\t%s\n' % self.schedule['tuesday'] \
+                    if self.schedule['tuesday'] != [] else ''
+        wednesday = '\tWednesday\n\t\t%s\n' % self.schedule['wednesday'] \
+                    if self.schedule['wednesday'] != [] else ''
+        thursday = '\tThursday\n\t\t%s\n' % self.schedule['thursday'] \
+                    if self.schedule['thursday'] != [] else ''
+        friday = '\tFriday\n\t\t%s\n' % self.schedule['friday'] \
+                    if self.schedule['friday'] != [] else ''
 
         return 'Pair: \n\t%s, %s\nTimes:\n%s%s%s%s%s' % \
             (str(self.ita1), str(self.ita2), monday, tuesday, wednesday, thursday, friday)
+
+    def __repr__(self):
+        return str(self)
+
+    def contains_student(self, s):
+        return self.ita1 == s or self.ita2 == s
+
+class Pairing(object):
+    def __init__(self, consultant, itas, times):
+        self.consultant = consultant
+        self.ita1 = itas.ita1
+        self.ita2 = itas.ita2
+        self.schedule = times
+
+    def __str__(self):
+        monday = '\tMonday\n\t\t%s\n' % self.schedule['monday'] \
+                    if self.schedule['monday'] != [] else ''
+        tuesday = '\tTuesday\n\t\t%s\n' % self.schedule['tuesday'] \
+                    if self.schedule['tuesday'] != [] else ''
+        wednesday = '\tWednesday\n\t\t%s\n' % self.schedule['wednesday'] \
+                    if self.schedule['wednesday'] != [] else ''
+        thursday = '\tThursday\n\t\t%s\n' % self.schedule['thursday'] \
+                    if self.schedule['thursday'] != [] else ''
+        friday = '\tFriday\n\t\t%s\n' % self.schedule['friday'] \
+                    if self.schedule['friday'] != [] else ''
+
+        return 'Consultant: \n\t%s\nItas: \n\t%s, %s\nTimes:\n%s%s%s%s%s' % \
+            (str(self.consultant), str(self.ita1), str(self.ita2), monday, tuesday, wednesday, thursday, friday)
 
     def __repr__(self):
         return str(self)
